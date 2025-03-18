@@ -5,5 +5,9 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+    public boolean equals(Position other) {
+        return this.x == other.x && this.y == other.y;
+    }
+
 }
 

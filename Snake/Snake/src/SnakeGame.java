@@ -26,9 +26,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
-
-    @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
@@ -46,6 +43,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             default -> throw new IllegalStateException("Unexpected value: " + e.getKeyCode());
         }
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyReleased(KeyEvent e) {}
@@ -69,8 +69,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        snake.move();
         checkFoodCollision();
+        checkWallCollision();
+        checkSnakeCollision();
+        snake.move();
         repaint();
     }
 
@@ -82,6 +84,20 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 snake.grow();
                 score++;
             }
+        }
+    }
+
+    public void checkWallCollision() {
+        Position head = snake.body.getFirst();
+        if (head.x >= width || head.x <= 0 || head.y <= 0 || head.y >= height) {
+            gameLoop.stop();
+        }
+    }
+
+    public void checkSnakeCollision() {
+        Position head = snake.body.getFirst();
+        for (int i = 1; i < snake.body.size(); i++) {
+            Position tile = snake.body.get(i);
         }
     }
  }

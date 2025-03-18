@@ -10,6 +10,12 @@ public class Snake {
         body.add(new Position(120, 100));
         body.add(new Position(110, 100));
         body.add(new Position(100, 100));
+        body.add(new Position(90, 100));
+        body.add(new Position(80, 100));
+        body.add(new Position(70, 100));
+        body.add(new Position(60, 100));
+        body.add(new Position(50, 100));
+        body.add(new Position(40, 100));
         direction = Direction.right;
         this.tileSize = tileSize;
     }
@@ -17,15 +23,16 @@ public class Snake {
         direction = dir;
     }
     public void grow() {
+        Position head = body.getFirst();
         switch (direction) {
-            case Direction.right -> body.add(new Position(body.getLast().x - tileSize, body.getLast().y));
-            case Direction.left -> body.add(new Position(body.getLast().x + tileSize, body.getLast().y));
-            case Direction.up -> body.add(new Position(body.getLast().x, body.getLast().y - tileSize));
-            case Direction.down -> body.add(new Position(body.getLast().x, body.getLast().y + tileSize));
+            case Direction.right -> body.addFirst(new Position(head.x + tileSize, head.y));
+            case Direction.left -> body.addFirst(new Position(head.x - tileSize, head.y));
+            case Direction.up -> body.addFirst(new Position(head.x, head.y + tileSize));
+            case Direction.down -> body.addFirst(new Position(head.x, head.y - tileSize));
         }
     }
     public void move() {
-        for (int i = 1; i < body.size(); i++) {
+        for (int i = body.size()-1; i > 0; i--) {
             body.set(i, body.get(i-1));
         }
         switch (direction) {
